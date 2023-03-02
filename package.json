@@ -1,0 +1,25 @@
+{
+  "name": "@hexlet/code",
+  "version": "1.0.0",
+  "description": "Chat with channels",
+  "main": "index.js",
+  "scripts": {
+    "build": "npm run build --prefix frontend",
+    "start": "start-server -s ./frontend/build",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Frit027/frontend-project-12.git"
+  },
+  "author": "Ilya Yurov",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Frit027/frontend-project-12/issues"
+  },
+  "homepage": "https://github.com/Frit027/frontend-project-12#readme",
+  "dependencies": {
+    "@hexlet/chat-server": "^1.1.6",
+    "create-react-app": "^5.0.1"
+  }
+}

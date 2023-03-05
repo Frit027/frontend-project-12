@@ -25,9 +25,10 @@ const Login = () => {
       <h1 className="text-center mb-4">Войти</h1>
 
       <Form.Group>
-        <FloatingLabel className="mb-3" label="Ваш ник">
+        <FloatingLabel controlId="username" className="mb-3" label="Ваш ник">
           <Form.Control
             type="text"
+            id="username"
             name="username"
             placeholder="Ваш ник"
             onChange={formik.handleChange}
@@ -41,9 +42,10 @@ const Login = () => {
         : null}
 
       <Form.Group>
-        <FloatingLabel className="mb-4" label="Пароль">
+        <FloatingLabel controlId="password" className="mb-4" label="Пароль">
           <Form.Control
             type="password"
+            id="password"
             name="password"
             placeholder="Пароль"
             onChange={formik.handleChange}

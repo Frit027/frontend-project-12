@@ -1,22 +1,45 @@
-import React from 'react';
+import React, {
+  useContext, useEffect, useRef, useState,
+} from 'react';
 import { useFormik } from 'formik';
-import * as yup from 'yup';
 import Button from 'react-bootstrap/Button';
 import FloatingLabel from 'react-bootstrap/FloatingLabel';
 import Form from 'react-bootstrap/Form';
+import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
+import UserContext from '../../AuthContext';
 
 const Login = () => {
+  const [isAuthFailed, setIsAuthFailed] = useState(false);
+  const navigate = useNavigate();
+  const inputUsername = useRef();
+  const { logIn } = useContext(UserContext);
+
+  useEffect(() => {
+    inputUsername.current.focus();
+  }, []);
+
   const formik = useFormik({
     initialValues: {
       username: '',
       password: '',
     },
-    validationSchema: yup.object({
-      username: yup.string().required(),
-      password: yup.string().required(),
-    }),
-    onSubmit: (values) => {
-      console.log(values);
+    onSubmit: async (values) => {
+      setIsAuthFailed(false);
+      try {
+        const { data } = await axios.post('/api/v1/login', values);
+        localStorage.setItem('token', data.token);
+        logIn();
+        navigate('/');
+      } catch (err) {
+        formik.setSubmitting(false);
+        if (err.isAxiosError && err.response.status === 401) {
+          setIsAuthFailed(true);
+          inputUsername.current.select();
+          return;
+        }
+        throw err;
+      }
     },
   });
 
@@ -27,36 +50,36 @@ const Login = () => {
       <Form.Group>
         <FloatingLabel controlId="username" className="mb-3" label="Ваш ник">
           <Form.Control
+            required
             type="text"
             id="username"
             name="username"
             placeholder="Ваш ник"
-            onChange={formik.handleChange}
             value={formik.values.username}
+            onChange={formik.handleChange}
+            isInvalid={isAuthFailed}
+            ref={inputUsername}
           />
         </FloatingLabel>
       </Form.Group>
-
-      {formik.touched.username && formik.errors.username
-        ? <div>{formik.errors.username}</div>
-        : null}
 
       <Form.Group>
         <FloatingLabel controlId="password" className="mb-4" label="Пароль">
           <Form.Control
+            required
             type="password"
             id="password"
             name="password"
             placeholder="Пароль"
-            onChange={formik.handleChange}
             value={formik.values.password}
+            onChange={formik.handleChange}
+            isInvalid={isAuthFailed}
           />
+          <Form.Control.Feedback type="invalid" tooltip>
+            Неверные имя пользователя или пароль
+          </Form.Control.Feedback>
         </FloatingLabel>
       </Form.Group>
-
-      {formik.touched.password && formik.errors.password
-        ? <div>{formik.errors.password}</div>
-        : null}
 
       <Button className="w-100 mb-3" variant="outline-primary" type="submit">Войти</Button>
     </Form>

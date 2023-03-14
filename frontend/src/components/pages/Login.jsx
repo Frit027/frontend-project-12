@@ -1,19 +1,15 @@
-import React, {
-  useContext, useEffect, useRef, useState,
-} from 'react';
-import { useFormik } from 'formik';
+import React, { useEffect, useRef, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import Button from 'react-bootstrap/Button';
 import FloatingLabel from 'react-bootstrap/FloatingLabel';
 import Form from 'react-bootstrap/Form';
+import { useFormik } from 'formik';
 import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
-import UserContext from '../../AuthContext';
 
 const Login = () => {
   const [isAuthFailed, setIsAuthFailed] = useState(false);
   const navigate = useNavigate();
   const inputUsername = useRef();
-  const { logIn } = useContext(UserContext);
 
   useEffect(() => {
     inputUsername.current.focus();
@@ -29,7 +25,6 @@ const Login = () => {
       try {
         const { data } = await axios.post('/api/v1/login', values);
         localStorage.setItem('token', data.token);
-        logIn();
         navigate('/');
       } catch (err) {
         formik.setSubmitting(false);

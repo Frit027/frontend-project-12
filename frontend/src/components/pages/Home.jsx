@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Navigate } from 'react-router-dom';
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
@@ -11,6 +11,7 @@ import Channels from '../Channels';
 import Messages from '../Messages';
 
 const Home = () => {
+  const [currentChannelId, setCurrentChannelId] = useState(null);
   const token = localStorage.getItem('token');
   const dispatch = useDispatch();
 
@@ -18,9 +19,9 @@ const Home = () => {
     const fetchData = async () => {
       const { data } = await axios
         .get('/api/v1/data', { headers: token ? { Authorization: `Bearer ${token}` } : {} });
-      console.log(data);
       dispatch(channelsActions.addChannels(data.channels));
       dispatch(messagesActions.addMessages(data.messages));
+      setCurrentChannelId(data.currentChannelId);
     };
 
     if (token) {
@@ -34,14 +35,13 @@ const Home = () => {
         <Container className="h-100 my-4 overflow-hidden rounded shadow">
           <Row className="h-100 bg-white flex-md-row">
             <Col className="col-4 col-md-2 border-end px-0 bg-light flex-column h-100 d-flex">
-              <div className="d-flex mt-1 justify-content-between mb-2 ps-4 pe-2 p-4">
-                <b>Каналы</b>
-                <button className="p-0 text-primary btn btn-group-vertical" type="button">+</button>
-              </div>
-              <Channels />
+              <Channels
+                currentChannelId={currentChannelId}
+                setCurrentChannelId={setCurrentChannelId}
+              />
             </Col>
             <Col className="col p-0 h-100">
-              <Messages />
+              <Messages currentChannelId={currentChannelId} />
             </Col>
           </Row>
         </Container>

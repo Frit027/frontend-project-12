@@ -5,20 +5,21 @@ import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import { useDispatch } from 'react-redux';
 import axios from 'axios';
+import PropTypes from 'prop-types';
+import { Socket } from 'socket.io-client';
 import { actions as channelsActions } from '../../slices/channelsSlice';
 import { actions as messagesActions } from '../../slices/messagesSlice';
 import Channels from '../Channels';
 import Messages from '../Messages';
 
-const Home = () => {
+const Home = ({ socket }) => {
   const [currentChannelId, setCurrentChannelId] = useState(null);
   const token = localStorage.getItem('token');
   const dispatch = useDispatch();
 
   useEffect(() => {
     const fetchData = async () => {
-      const { data } = await axios
-        .get('/api/v1/data', { headers: token ? { Authorization: `Bearer ${token}` } : {} });
+      const { data } = await axios.get('/api/v1/data', { headers: token ? { Authorization: `Bearer ${token}` } : {} });
       dispatch(channelsActions.addChannels(data.channels));
       dispatch(messagesActions.addMessages(data.messages));
       setCurrentChannelId(data.currentChannelId);
@@ -41,13 +42,17 @@ const Home = () => {
               />
             </Col>
             <Col className="col p-0 h-100">
-              <Messages currentChannelId={currentChannelId} />
+              <Messages currentChannelId={currentChannelId} socket={socket} />
             </Col>
           </Row>
         </Container>
       )
       : <Navigate to="/login" />
   );
+};
+
+Home.propTypes = {
+  socket: PropTypes.instanceOf(Socket).isRequired,
 };
 
 export default Home;

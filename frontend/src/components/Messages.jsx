@@ -1,17 +1,26 @@
-import React, { useRef, useState } from 'react';
-import { useSelector } from 'react-redux';
+import React, { useEffect, useRef, useState } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 import PropTypes from 'prop-types';
 import Form from 'react-bootstrap/Form';
 import InputGroup from 'react-bootstrap/InputGroup';
-import { selectors as messageSelectors } from '../slices/messagesSlice';
+import { Socket } from 'socket.io-client';
+import { actions as messagesActions } from '../slices/messagesSlice';
 import { selectors as channelSelectors } from '../slices/channelsSlice';
 
-const Messages = (props) => {
-  const { currentChannelId } = props;
+const Messages = ({ currentChannelId, socket }) => {
   const [body, setBody] = useState('');
-  const button = useRef();
-  const messages = useSelector(messageSelectors.selectAll);
   const currentChannel = useSelector((state) => channelSelectors.selectById(state, currentChannelId));
+  const messages = useSelector(
+    (state) => Object.values(state.messages.entities).filter((message) => message.channelId === currentChannelId),
+  );
+  const dispatch = useDispatch();
+  const button = useRef();
+
+  useEffect(() => {
+    socket.on('newMessage', (msg) => {
+      dispatch(messagesActions.addMessage(msg));
+    });
+  }, []);
 
   const handleChange = (e) => {
     button.current.disabled = !e.target.value;
@@ -20,19 +29,21 @@ const Messages = (props) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    socket.emit('newMessage', { body, channelId: currentChannelId });
     setBody('');
     button.current.disabled = true;
   };
 
+  // TODO: окончания слова
   return (
     <div className="d-flex flex-column h-100">
       <div className="bg-light mb-4 p-3 shadow-sm small">
         <p className="m-0"><b>{`# ${currentChannel ? currentChannel.name : ''}`}</b></p>
-        <span className="text-muted">3 сообщения</span>
+        <span className="text-muted">{`${messages.length} сообщения`}</span>
       </div>
       <div className="overflow-auto px-5">
         {messages.map((message) => (
-          <div className="text-break mb-2">{message}</div>
+          <div className="text-break mb-2">{message.body}</div>
         ))}
       </div>
       <div className="mt-auto px-5 py-3">
@@ -42,7 +53,6 @@ const Messages = (props) => {
               name="body"
               className="border-0 p-0 ps-2"
               placeholder="Введите сообщение..."
-              aria-label="Новое сообщение"
               onChange={handleChange}
               value={body}
               autocomplete="off"
@@ -66,6 +76,7 @@ const Messages = (props) => {
 
 Messages.propTypes = {
   currentChannelId: PropTypes.number.isRequired,
+  socket: PropTypes.instanceOf(Socket).isRequired,
 };
 
 export default Messages;

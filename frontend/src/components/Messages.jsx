@@ -1,26 +1,19 @@
-import React, { useEffect, useRef, useState } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import React, { useContext, useRef, useState } from 'react';
+import { useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
 import Form from 'react-bootstrap/Form';
 import InputGroup from 'react-bootstrap/InputGroup';
-import { Socket } from 'socket.io-client';
-import { actions as messagesActions } from '../slices/messagesSlice';
 import { selectors as channelSelectors } from '../slices/channelsSlice';
+import SocketContext from '../contexts/index';
 
-const Messages = ({ currentChannelId, socket }) => {
+const Messages = ({ currentChannelId }) => {
   const [body, setBody] = useState('');
+  const { sendMessage } = useContext(SocketContext);
+  const button = useRef();
   const currentChannel = useSelector((state) => channelSelectors.selectById(state, currentChannelId));
   const messages = useSelector(
     (state) => Object.values(state.messages.entities).filter((message) => message.channelId === currentChannelId),
   );
-  const dispatch = useDispatch();
-  const button = useRef();
-
-  useEffect(() => {
-    socket.on('newMessage', (msg) => {
-      dispatch(messagesActions.addMessage(msg));
-    });
-  }, []);
 
   const handleChange = (e) => {
     button.current.disabled = !e.target.value;
@@ -29,7 +22,7 @@ const Messages = ({ currentChannelId, socket }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    socket.emit('newMessage', { body, channelId: currentChannelId });
+    sendMessage(body, currentChannelId);
     setBody('');
     button.current.disabled = true;
   };
@@ -76,7 +69,6 @@ const Messages = ({ currentChannelId, socket }) => {
 
 Messages.propTypes = {
   currentChannelId: PropTypes.number.isRequired,
-  socket: PropTypes.instanceOf(Socket).isRequired,
 };
 
 export default Messages;

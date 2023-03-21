@@ -5,14 +5,12 @@ import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import { useDispatch } from 'react-redux';
 import axios from 'axios';
-import PropTypes from 'prop-types';
-import { Socket } from 'socket.io-client';
 import { actions as channelsActions } from '../../slices/channelsSlice';
 import { actions as messagesActions } from '../../slices/messagesSlice';
 import Channels from '../Channels';
 import Messages from '../Messages';
 
-const Home = ({ socket }) => {
+const Home = () => {
   const [currentChannelId, setCurrentChannelId] = useState(null);
   const token = localStorage.getItem('token');
   const dispatch = useDispatch();
@@ -42,17 +40,13 @@ const Home = ({ socket }) => {
               />
             </Col>
             <Col className="col p-0 h-100">
-              <Messages currentChannelId={currentChannelId} socket={socket} />
+              <Messages currentChannelId={currentChannelId} />
             </Col>
           </Row>
         </Container>
       )
       : <Navigate to="/login" />
   );
-};
-
-Home.propTypes = {
-  socket: PropTypes.instanceOf(Socket).isRequired,
 };
 
 export default Home;

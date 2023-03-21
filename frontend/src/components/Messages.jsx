@@ -1,15 +1,15 @@
 import React, { useContext, useRef, useState } from 'react';
 import { useSelector } from 'react-redux';
-import PropTypes from 'prop-types';
 import Form from 'react-bootstrap/Form';
 import InputGroup from 'react-bootstrap/InputGroup';
 import { selectors as channelSelectors } from '../slices/channelsSlice';
 import SocketContext from '../contexts/index';
 
-const Messages = ({ currentChannelId }) => {
+const Messages = () => {
   const [body, setBody] = useState('');
   const { sendMessage } = useContext(SocketContext);
   const button = useRef();
+  const currentChannelId = useSelector((state) => state.channels.currentChannelId);
   const currentChannel = useSelector((state) => channelSelectors.selectById(state, currentChannelId));
   const messages = useSelector(
     (state) => Object.values(state.messages.entities).filter((message) => message.channelId === currentChannelId),
@@ -65,10 +65,6 @@ const Messages = ({ currentChannelId }) => {
       </div>
     </div>
   );
-};
-
-Messages.propTypes = {
-  currentChannelId: PropTypes.number.isRequired,
 };
 
 export default Messages;

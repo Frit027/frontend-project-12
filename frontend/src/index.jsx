@@ -4,12 +4,15 @@ import React from 'react';
 import { Provider } from 'react-redux';
 import App from './components/App';
 import store from './slices/index';
+import SocketProvider from './components/SocketProvider';
 
 const root = ReactDOM.createRoot(document.getElementById('chat'));
 root.render(
   <React.StrictMode>
     <Provider store={store}>
-      <App />
+      <SocketProvider>
+        <App />
+      </SocketProvider>
     </Provider>
   </React.StrictMode>,
 );

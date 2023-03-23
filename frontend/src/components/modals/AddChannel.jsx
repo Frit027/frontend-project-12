@@ -9,7 +9,7 @@ import { selectors } from '../../slices/channelsSlice';
 
 const AddChannel = ({ hideModal }) => {
   const input = useRef();
-  const { addChannel } = useContext(SocketContext);
+  const { addNewChannel } = useContext(SocketContext);
   const channelNames = useSelector(selectors.selectAll).map((channel) => channel.name);
 
   useEffect(() => {
@@ -28,7 +28,7 @@ const AddChannel = ({ hideModal }) => {
         .required('Обязательное поле'),
     }),
     onSubmit: ({ name }) => {
-      addChannel(name);
+      addNewChannel(name);
       hideModal();
     },
   });
@@ -56,7 +56,7 @@ const AddChannel = ({ hideModal }) => {
           </Form.Group>
 
           <div className="d-flex justify-content-end">
-            <Button className="mr-2" variant="secondary" onClick={hideModal}>Отменить</Button>
+            <Button className="me-2" variant="secondary" onClick={hideModal}>Отменить</Button>
             <Button variant="primary" type="submit">Отправить</Button>
           </div>
         </form>

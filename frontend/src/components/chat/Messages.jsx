@@ -27,11 +27,20 @@ const Messages = () => {
     setBody(e.target.value);
   };
 
+  const sending = () => {
+    input.current.disabled = true;
+    button.current.disabled = true;
+  };
+
+  const messageDelivered = () => {
+    input.current.disabled = false;
+    setBody('');
+  };
+
   const handleSubmit = (e) => {
     e.preventDefault();
-    addNewMessage(body, currentChannelId);
-    setBody('');
-    button.current.disabled = true;
+    addNewMessage(body, currentChannelId, messageDelivered);
+    sending();
   };
 
   // TODO: окончания слова

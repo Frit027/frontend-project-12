@@ -22,6 +22,10 @@ const SocketProvider = ({ children }) => {
       store.dispatch(channelsActions.removeChannel(id));
       store.dispatch(channelsActions.setCurrentChannelId(1));
     });
+
+    socket.on('renameChannel', ({ id, name }) => {
+      store.dispatch(channelsActions.updateChannel({ id, changes: { name } }));
+    });
   }, []);
 
   const addNewMessage = (body, id) => socket.emit('newMessage', { body, channelId: id });
@@ -32,7 +36,11 @@ const SocketProvider = ({ children }) => {
 
   const removeChannel = (id) => socket.emit('removeChannel', { id });
 
-  const value = useMemo(() => ({ addNewMessage, addNewChannel, removeChannel }), []);
+  const renameChannel = (id, name) => socket.emit('renameChannel', { id, name });
+
+  const value = useMemo(() => ({
+    addNewMessage, addNewChannel, removeChannel, renameChannel,
+  }), []);
 
   return (
     <SocketContext.Provider value={value}>

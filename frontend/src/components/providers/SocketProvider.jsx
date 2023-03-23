@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react';
+import React, { useEffect, useMemo } from 'react';
 import { io } from 'socket.io-client';
 import PropTypes from 'prop-types';
 import SocketContext from '../../contexts';
@@ -9,21 +9,30 @@ import { actions as channelsActions } from '../../slices/channelsSlice';
 const SocketProvider = ({ children }) => {
   const socket = io();
 
-  socket.on('newMessage', (msg) => {
-    store.dispatch(messagesActions.addMessage(msg));
-  });
+  useEffect(() => {
+    socket.on('newMessage', (msg) => {
+      store.dispatch(messagesActions.addMessage(msg));
+    });
 
-  socket.on('newChannel', (channel) => {
-    store.dispatch(channelsActions.addChannel(channel));
-  });
+    socket.on('newChannel', (channel) => {
+      store.dispatch(channelsActions.addChannel(channel));
+    });
 
-  const sendMessage = (body, id) => socket.emit('newMessage', { body, channelId: id });
+    socket.on('removeChannel', ({ id }) => {
+      store.dispatch(channelsActions.removeChannel(id));
+      store.dispatch(channelsActions.setCurrentChannelId(1));
+    });
+  }, []);
 
-  const addChannel = (name) => socket.emit('newChannel', { name }, ({ data }) => {
+  const addNewMessage = (body, id) => socket.emit('newMessage', { body, channelId: id });
+
+  const addNewChannel = (name) => socket.emit('newChannel', { name }, ({ data }) => {
     store.dispatch(channelsActions.setCurrentChannelId(data.id));
   });
 
-  const value = useMemo(() => ({ sendMessage, addChannel }), []);
+  const removeChannel = (id) => socket.emit('removeChannel', { id });
+
+  const value = useMemo(() => ({ addNewMessage, addNewChannel, removeChannel }), []);
 
   return (
     <SocketContext.Provider value={value}>

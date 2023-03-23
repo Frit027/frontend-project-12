@@ -30,7 +30,11 @@ const SocketProvider = ({ children }) => {
     });
   }, []);
 
-  const addNewMessage = (body, id) => socket.emit('newMessage', { body, channelId: id });
+  const addNewMessage = (body, id, resolve) => socket.emit('newMessage', { body, channelId: id }, (response) => {
+    if (response.status === 'ok') {
+      resolve();
+    }
+  });
 
   const addNewChannel = (name) => socket.emit('newChannel', { name }, ({ data }) => {
     store.dispatch(channelsActions.setCurrentChannelId(data.id));

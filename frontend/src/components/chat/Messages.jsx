@@ -2,8 +2,8 @@ import React, { useContext, useRef, useState } from 'react';
 import { useSelector } from 'react-redux';
 import Form from 'react-bootstrap/Form';
 import InputGroup from 'react-bootstrap/InputGroup';
-import { selectors as channelSelectors } from '../slices/channelsSlice';
-import SocketContext from '../contexts/index';
+import { selectors as channelSelectors } from '../../slices/channelsSlice';
+import SocketContext from '../../contexts';
 
 const Messages = () => {
   const [body, setBody] = useState('');

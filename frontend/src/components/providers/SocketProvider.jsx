@@ -1,10 +1,10 @@
 import React, { useMemo } from 'react';
 import { io } from 'socket.io-client';
 import PropTypes from 'prop-types';
-import SocketContext from '../contexts/index';
-import store from '../slices';
-import { actions as messagesActions } from '../slices/messagesSlice';
-import { actions as channelsActions } from '../slices/channelsSlice';
+import SocketContext from '../../contexts';
+import store from '../../slices';
+import { actions as messagesActions } from '../../slices/messagesSlice';
+import { actions as channelsActions } from '../../slices/channelsSlice';
 
 const SocketProvider = ({ children }) => {
   const socket = io();

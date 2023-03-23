@@ -7,8 +7,8 @@ import { useDispatch } from 'react-redux';
 import axios from 'axios';
 import { actions as channelsActions } from '../../slices/channelsSlice';
 import { actions as messagesActions } from '../../slices/messagesSlice';
-import Channels from '../Channels';
-import Messages from '../Messages';
+import Channels from '../chat/Channels';
+import Messages from '../chat/Messages';
 
 const Home = () => {
   const token = localStorage.getItem('token');

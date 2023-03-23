@@ -4,7 +4,7 @@ import React from 'react';
 import { Provider } from 'react-redux';
 import App from './components/App';
 import store from './slices/index';
-import SocketProvider from './components/SocketProvider';
+import SocketProvider from './components/providers/SocketProvider';
 
 const root = ReactDOM.createRoot(document.getElementById('chat'));
 root.render(

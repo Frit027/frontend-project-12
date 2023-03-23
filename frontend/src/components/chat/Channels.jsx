@@ -5,13 +5,14 @@ import { selectors, actions as channelsActions } from '../../slices/channelsSlic
 import getModal from '../modals';
 
 const Channels = () => {
+  const [modalInfo, setModalInfo] = useState({ type: null, channel: null });
   const dispatch = useDispatch();
   const channels = useSelector(selectors.selectAll);
   const currentChannelId = useSelector((state) => state.channels.currentChannelId);
 
-  const [typeModal, setTypeModal] = useState(null);
-  const hideModal = () => setTypeModal(null);
-  const showModal = (type) => setTypeModal(type);
+  const hideModal = () => setModalInfo({ type: null, channel: null });
+
+  const showModal = (type, channel = null) => setModalInfo({ type, channel });
 
   const renderButton = (channel) => (
     <Button
@@ -29,18 +30,19 @@ const Channels = () => {
       {renderButton(channel)}
       <Dropdown.Toggle className="flex-grow-0" split variant={channel.id === currentChannelId ? 'secondary' : ''} />
       <Dropdown.Menu>
-        <Dropdown.Item>Удалить</Dropdown.Item>
-        <Dropdown.Item>Переименовать</Dropdown.Item>
+        <Dropdown.Item onClick={() => showModal('removing', channel)}>Удалить</Dropdown.Item>
+        <Dropdown.Item onClick={() => showModal('removing', channel)}>Переименовать</Dropdown.Item>
       </Dropdown.Menu>
     </Dropdown>
   );
 
   const renderModal = () => {
-    if (!typeModal) {
+    if (!modalInfo.type) {
       return null;
     }
-    const Component = getModal(typeModal);
-    return <Component hideModal={hideModal} />;
+
+    const Component = getModal(modalInfo.type);
+    return <Component modalInfo={modalInfo} hideModal={hideModal} />;
   };
 
   return (

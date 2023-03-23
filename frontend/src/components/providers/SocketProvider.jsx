@@ -20,7 +20,9 @@ const SocketProvider = ({ children }) => {
 
     socket.on('removeChannel', ({ id }) => {
       store.dispatch(channelsActions.removeChannel(id));
-      store.dispatch(channelsActions.setCurrentChannelId(1));
+      if (store.getState().channels.currentChannelId === id) {
+        store.dispatch(channelsActions.setCurrentChannelId(1));
+      }
     });
 
     socket.on('renameChannel', ({ id, name }) => {

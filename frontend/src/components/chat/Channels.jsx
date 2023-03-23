@@ -31,7 +31,7 @@ const Channels = () => {
       <Dropdown.Toggle className="flex-grow-0" split variant={channel.id === currentChannelId ? 'secondary' : ''} />
       <Dropdown.Menu>
         <Dropdown.Item onClick={() => showModal('removing', channel)}>Удалить</Dropdown.Item>
-        <Dropdown.Item onClick={() => showModal('removing', channel)}>Переименовать</Dropdown.Item>
+        <Dropdown.Item onClick={() => showModal('renaming', channel)}>Переименовать</Dropdown.Item>
       </Dropdown.Menu>
     </Dropdown>
   );

@@ -1,4 +1,6 @@
-import React, { useContext, useRef, useState } from 'react';
+import React, {
+  useContext, useEffect, useRef, useState,
+} from 'react';
 import { useSelector } from 'react-redux';
 import Form from 'react-bootstrap/Form';
 import InputGroup from 'react-bootstrap/InputGroup';
@@ -7,13 +9,18 @@ import SocketContext from '../../contexts';
 
 const Messages = () => {
   const [body, setBody] = useState('');
-  const { sendMessage } = useContext(SocketContext);
+  const { addNewMessage } = useContext(SocketContext);
+  const input = useRef();
   const button = useRef();
   const currentChannelId = useSelector((state) => state.channels.currentChannelId);
   const currentChannel = useSelector((state) => channelSelectors.selectById(state, currentChannelId));
   const messages = useSelector(
     (state) => Object.values(state.messages.entities).filter((message) => message.channelId === currentChannelId),
   );
+
+  useEffect(() => {
+    input.current.focus();
+  }, [currentChannelId]);
 
   const handleChange = (e) => {
     button.current.disabled = !e.target.value;
@@ -22,7 +29,7 @@ const Messages = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    sendMessage(body, currentChannelId);
+    addNewMessage(body, currentChannelId);
     setBody('');
     button.current.disabled = true;
   };
@@ -43,6 +50,7 @@ const Messages = () => {
         <Form className="py-1 border rounded-2" onSubmit={handleSubmit}>
           <InputGroup>
             <Form.Control
+              ref={input}
               name="body"
               className="border-0 p-0 ps-2"
               placeholder="Введите сообщение..."

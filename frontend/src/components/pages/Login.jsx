@@ -88,7 +88,7 @@ const Login = () => {
             <Card.Footer className="p-4">
               <div className="text-center">
                 <span>Нет аккаунта? </span>
-                <Link to="signup">Регистрация</Link>
+                <Link to="/signup">Регистрация</Link>
               </div>
             </Card.Footer>
           </Card>

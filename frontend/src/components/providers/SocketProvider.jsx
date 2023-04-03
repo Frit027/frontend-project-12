@@ -1,35 +1,11 @@
-import React, { useEffect, useMemo } from 'react';
-import { io } from 'socket.io-client';
+import React, { useMemo } from 'react';
+import { Socket } from 'socket.io-client';
 import PropTypes from 'prop-types';
 import SocketContext from '../../contexts';
 import store from '../../slices';
-import { actions as messagesActions } from '../../slices/messagesSlice';
 import { actions as channelsActions } from '../../slices/channelsSlice';
 
-const SocketProvider = ({ children }) => {
-  const socket = io();
-
-  useEffect(() => {
-    socket.on('newMessage', (msg) => {
-      store.dispatch(messagesActions.addMessage(msg));
-    });
-
-    socket.on('newChannel', (channel) => {
-      store.dispatch(channelsActions.addChannel(channel));
-    });
-
-    socket.on('removeChannel', ({ id }) => {
-      store.dispatch(channelsActions.removeChannel(id));
-      if (store.getState().channels.currentChannelId === id) {
-        store.dispatch(channelsActions.setCurrentChannelId(1));
-      }
-    });
-
-    socket.on('renameChannel', ({ id, name }) => {
-      store.dispatch(channelsActions.updateChannel({ id, changes: { name } }));
-    });
-  }, []);
-
+const SocketProvider = ({ children, socket }) => {
   const addNewMessage = (body, id, resolve) => socket.emit('newMessage', { body, channelId: id }, (response) => {
     if (response.status === 'ok') {
       resolve();
@@ -57,6 +33,7 @@ const SocketProvider = ({ children }) => {
 
 SocketProvider.propTypes = {
   children: PropTypes.node.isRequired,
+  socket: PropTypes.instanceOf(Socket).isRequired,
 };
 
 export default SocketProvider;

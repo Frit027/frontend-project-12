@@ -1,10 +1,12 @@
 import React, { useContext } from 'react';
 import { Modal } from 'react-bootstrap';
 import PropTypes from 'prop-types';
+import { useTranslation } from 'react-i18next';
 import SocketContext from '../../contexts';
 import ChannelNameForm from '../forms/ChannelNameForm';
 
 const RenameChannel = ({ modalInfo, hideModal }) => {
+  const { t } = useTranslation();
   const { renameChannel } = useContext(SocketContext);
 
   const handleSubmit = (name) => {
@@ -14,7 +16,7 @@ const RenameChannel = ({ modalInfo, hideModal }) => {
   return (
     <Modal show centered onHide={hideModal}>
       <Modal.Header closeButton>
-        <Modal.Title>Переименовать канал</Modal.Title>
+        <Modal.Title>{t('titles.renameChannel')}</Modal.Title>
       </Modal.Header>
       <Modal.Body>
         <ChannelNameForm currentName={modalInfo.channel.name} handleSubmit={handleSubmit} hideModal={hideModal} />

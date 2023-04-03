@@ -1,7 +1,9 @@
 import React from 'react';
 import { Container, Navbar, Button } from 'react-bootstrap';
+import { useTranslation } from 'react-i18next';
 
 const Header = () => {
+  const { t } = useTranslation();
   const token = localStorage.getItem('token');
 
   const logout = () => {
@@ -12,8 +14,8 @@ const Header = () => {
   return (
     <Navbar className="shadow-sm" expand="lg" variant="light" bg="white">
       <Container>
-        <Navbar.Brand href="/">Hexlet Chat</Navbar.Brand>
-        {token ? <Button type="button" variant="primary" onClick={logout}>Выйти</Button> : null}
+        <Navbar.Brand href="/">{t('links.home')}</Navbar.Brand>
+        {token ? <Button type="button" variant="primary" onClick={logout}>{t('actions.logout')}</Button> : null}
       </Container>
     </Navbar>
   );

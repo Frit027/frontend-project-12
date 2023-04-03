@@ -4,10 +4,12 @@ import { useFormik } from 'formik';
 import * as yup from 'yup';
 import { useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
+import { useTranslation } from 'react-i18next';
 import { selectors } from '../../slices/channelsSlice';
 
 const ChannelNameForm = ({ currentName, handleSubmit, hideModal }) => {
   const input = useRef();
+  const { t } = useTranslation();
   const channelNames = useSelector(selectors.selectAll).map((channel) => channel.name);
 
   useEffect(() => {
@@ -24,10 +26,10 @@ const ChannelNameForm = ({ currentName, handleSubmit, hideModal }) => {
     },
     validationSchema: yup.object({
       name: yup.string()
-        .min(3, 'От 3 до 20 символов')
-        .max(20, 'От 3 до 20 символов')
-        .notOneOf(channelNames, 'Должно быть уникальным')
-        .required('Обязательное поле'),
+        .min(3, t('renameChannelForm.errors.length'))
+        .max(20, t('renameChannelForm.errors.length'))
+        .notOneOf(channelNames, t('renameChannelForm.errors.unique'))
+        .required(t('renameChannelForm.errors.required')),
     }),
     onSubmit: ({ name }) => {
       handleSubmit(name);
@@ -38,7 +40,7 @@ const ChannelNameForm = ({ currentName, handleSubmit, hideModal }) => {
   return (
     <form onSubmit={formik.handleSubmit}>
       <Form.Group>
-        <Form.Label class="visually-hidden">Имя канала</Form.Label>
+        <Form.Label class="visually-hidden">{t('labels.channelName')}</Form.Label>
         <Form.Control
           className="mb-2"
           id="name"
@@ -53,8 +55,8 @@ const ChannelNameForm = ({ currentName, handleSubmit, hideModal }) => {
       </Form.Group>
 
       <div className="d-flex justify-content-end">
-        <Button className="me-2" variant="secondary" onClick={hideModal}>Отменить</Button>
-        <Button variant="primary" type="submit">Отправить</Button>
+        <Button className="me-2" variant="secondary" onClick={hideModal}>{t('actions.cancel')}</Button>
+        <Button variant="primary" type="submit">{t('actions.send')}</Button>
       </div>
     </form>
   );

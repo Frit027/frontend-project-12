@@ -6,11 +6,13 @@ import { useFormik } from 'formik';
 import * as yup from 'yup';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
-import ImageSignUp from './signup.jpg';
+import { useTranslation } from 'react-i18next';
+import SignUpImage from '../../images/signup.jpg';
 
 const SignUp = () => {
   const navigate = useNavigate();
   const inputUsername = useRef();
+  const { t } = useTranslation();
 
   const formik = useFormik({
     initialValues: {
@@ -20,16 +22,16 @@ const SignUp = () => {
     },
     validationSchema: yup.object({
       username: yup.string()
-        .min(3, 'От 3 до 20 символов')
-        .max(20, 'От 3 до 20 символов')
-        .required('Обязательное поле'),
+        .min(3, t('signUpForm.errors.usernameLength'))
+        .max(20, t('signUpForm.errors.usernameLength'))
+        .required(t('signUpForm.errors.required')),
       password: yup.string()
-        .min(6, 'Не менее 6 символов')
-        .required('Обязательное поле'),
+        .min(6, t('signUpForm.errors.passwordLength'))
+        .required(t('signUpForm.errors.required')),
       confirmPassword: yup
         .mixed()
-        .oneOf([yup.ref('password'), null], 'Пароли должны совпадать')
-        .required('Обязательное поле'),
+        .oneOf([yup.ref('password'), null], t('signUpForm.errors.mustMatch'))
+        .required(t('signUpForm.errors.required')),
     }),
     onSubmit: async ({ username, password }) => {
       try {
@@ -39,7 +41,7 @@ const SignUp = () => {
       } catch (err) {
         formik.setSubmitting(false);
         if (err.isAxiosError && err.response.status === 409) {
-          formik.errors.username = 'Такой пользователь уже существует';
+          formik.errors.username = t('signUpForm.errors.uniqueUser');
           return;
         }
         throw err;
@@ -54,16 +56,16 @@ const SignUp = () => {
           <Card className="shadow-sm">
             <Card.Body className="d-flex flex-column flex-md-row justify-content-around align-items-center p-5">
               <div>
-                <Image src={ImageSignUp} alt="Регистрация" roundedCircle />
+                <Image src={SignUpImage} alt={t('titles.registration')} roundedCircle />
               </div>
               <Form className="w-50" onSubmit={formik.handleSubmit}>
-                <h1 className="text-center mb-4">Регистрация</h1>
-                <FloatingLabel controlId="username" className="mb-3" label="Имя пользователя">
+                <h1 className="text-center mb-4">{t('titles.registration')}</h1>
+                <FloatingLabel controlId="username" className="mb-3" label={t('labels.username')}>
                   <Form.Control
                     type="text"
                     id="username"
                     name="username"
-                    placeholder="Имя пользователя"
+                    placeholder={t('placeholders.username')}
                     autocomplete="username"
                     value={formik.values.username}
                     onChange={formik.handleChange}
@@ -74,12 +76,12 @@ const SignUp = () => {
                     {formik.errors.username}
                   </Form.Control.Feedback>
                 </FloatingLabel>
-                <FloatingLabel controlId="password" className="mb-3" label="Пароль">
+                <FloatingLabel controlId="password" className="mb-3" label={t('labels.password')}>
                   <Form.Control
                     type="password"
                     id="password"
                     name="password"
-                    placeholder="Пароль"
+                    placeholder={t('placeholders.password')}
                     autocomplete="new-password"
                     value={formik.values.password}
                     onChange={formik.handleChange}
@@ -90,12 +92,12 @@ const SignUp = () => {
                     {formik.errors.password}
                   </Form.Control.Feedback>
                 </FloatingLabel>
-                <FloatingLabel controlId="confirmPassword" className="mb-4" label="Подтвердите пароль">
+                <FloatingLabel controlId="confirmPassword" className="mb-4" label={t('labels.confirmPassword')}>
                   <Form.Control
                     type="password"
                     id="confirmPassword"
                     name="confirmPassword"
-                    placeholder="Подтвердите пароль"
+                    placeholder={t('placeholders.confirmPassword')}
                     autocomplete="new-password"
                     value={formik.values.confirmPassword}
                     onChange={formik.handleChange}
@@ -105,7 +107,7 @@ const SignUp = () => {
                     {formik.errors.confirmPassword}
                   </Form.Control.Feedback>
                 </FloatingLabel>
-                <Button className="w-100 mb-3" variant="outline-primary" type="submit">Зарегистрироваться</Button>
+                <Button className="w-100 mb-3" variant="outline-primary" type="submit">{t('actions.signUp')}</Button>
               </Form>
             </Card.Body>
           </Card>

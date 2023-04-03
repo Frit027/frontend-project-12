@@ -4,6 +4,7 @@ import React, {
 import { useSelector } from 'react-redux';
 import Form from 'react-bootstrap/Form';
 import InputGroup from 'react-bootstrap/InputGroup';
+import { useTranslation } from 'react-i18next';
 import { selectors as channelSelectors } from '../../slices/channelsSlice';
 import SocketContext from '../../contexts';
 
@@ -12,6 +13,7 @@ const Messages = () => {
   const { addNewMessage } = useContext(SocketContext);
   const input = useRef();
   const button = useRef();
+  const { t } = useTranslation();
   const currentChannelId = useSelector((state) => state.channels.currentChannelId);
   const currentChannel = useSelector((state) => channelSelectors.selectById(state, currentChannelId));
   const messages = useSelector(
@@ -43,12 +45,11 @@ const Messages = () => {
     sending();
   };
 
-  // TODO: окончания слова
   return (
     <div className="d-flex flex-column h-100">
       <div className="bg-light mb-4 p-3 shadow-sm small">
-        <p className="m-0"><b>{`# ${currentChannel ? currentChannel.name : ''}`}</b></p>
-        <span className="text-muted">{`${messages.length} сообщения`}</span>
+        <p className="m-0"><b>{currentChannel ? t('titles.channel', { name: currentChannel.name }) : ''}</b></p>
+        <span className="text-muted">{t('titles.message', { count: messages.length })}</span>
       </div>
       <div className="overflow-auto px-5">
         {messages.map((message) => (
@@ -62,7 +63,7 @@ const Messages = () => {
               ref={input}
               name="body"
               className="border-0 p-0 ps-2"
-              placeholder="Введите сообщение..."
+              placeholder={t('placeholders.enterMessage')}
               onChange={handleChange}
               value={body}
               autocomplete="off"

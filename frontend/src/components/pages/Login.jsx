@@ -5,12 +5,14 @@ import {
 } from 'react-bootstrap';
 import { useFormik } from 'formik';
 import axios from 'axios';
-import ImageLogin from './login.jpg';
+import { useTranslation } from 'react-i18next';
+import LoginImage from '../../images/login.jpg';
 
 const Login = () => {
   const [isAuthFailed, setIsAuthFailed] = useState(false);
   const navigate = useNavigate();
   const inputUsername = useRef();
+  const { t } = useTranslation();
 
   useEffect(() => {
     inputUsername.current.focus();
@@ -46,18 +48,18 @@ const Login = () => {
           <Card className="shadow-sm">
             <Card.Body className="row p-5">
               <Col xs={12} md={6} className="d-flex align-items-center justify-content-center">
-                <Image src={ImageLogin} alt="Войти" roundedCircle />
+                <Image src={LoginImage} alt="Войти" roundedCircle />
               </Col>
               <Form className="col-12 col-md-6 mt-3 mt-mb-0" onSubmit={formik.handleSubmit}>
-                <h1 className="text-center mb-4">Войти</h1>
+                <h1 className="text-center mb-4">{t('titles.login')}</h1>
                 <Form.Group>
-                  <FloatingLabel controlId="username" className="mb-3" label="Ваш ник">
+                  <FloatingLabel controlId="username" className="mb-3" label={t('labels.nickname')}>
                     <Form.Control
                       required
                       type="text"
                       id="username"
                       name="username"
-                      placeholder="Ваш ник"
+                      placeholder={t('placeholders.nickname')}
                       value={formik.values.username}
                       onChange={formik.handleChange}
                       isInvalid={isAuthFailed}
@@ -66,29 +68,27 @@ const Login = () => {
                   </FloatingLabel>
                 </Form.Group>
                 <Form.Group>
-                  <FloatingLabel controlId="password" className="mb-4" label="Пароль">
+                  <FloatingLabel controlId="password" className="mb-4" label={t('labels.password')}>
                     <Form.Control
                       required
                       type="password"
                       id="password"
                       name="password"
-                      placeholder="Пароль"
+                      placeholder={t('placeholders.password')}
                       value={formik.values.password}
                       onChange={formik.handleChange}
                       isInvalid={isAuthFailed}
                     />
-                    <Form.Control.Feedback type="invalid" tooltip>
-                      Неверные имя пользователя или пароль
-                    </Form.Control.Feedback>
+                    <Form.Control.Feedback type="invalid" tooltip>{t('loginForm.errors.wrong')}</Form.Control.Feedback>
                   </FloatingLabel>
                 </Form.Group>
-                <Button className="w-100 mb-3" variant="outline-primary" type="submit">Войти</Button>
+                <Button className="w-100 mb-3" variant="outline-primary" type="submit">{t('actions.login')}</Button>
               </Form>
             </Card.Body>
             <Card.Footer className="p-4">
               <div className="text-center">
-                <span>Нет аккаунта? </span>
-                <Link to="/signup">Регистрация</Link>
+                <span>{t('questions.noAccount')}</span>
+                <Link to="/signup">{t('links.registration')}</Link>
               </div>
             </Card.Footer>
           </Card>

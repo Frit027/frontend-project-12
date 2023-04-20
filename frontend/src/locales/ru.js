@@ -20,6 +20,9 @@ export default {
       addChannel: 'Добавить канал',
       removeChannel: 'Удалить канал',
       renameChannel: 'Переименовать канал',
+      channelAdded: 'Канал создан',
+      channelRemoved: 'Канал удалён',
+      channelRenamed: 'Канал переименован',
       notFound: 'Страница не найдена',
     },
     loginForm: {

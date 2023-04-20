@@ -2,8 +2,10 @@ import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Button, ButtonGroup, Dropdown } from 'react-bootstrap';
 import { useTranslation } from 'react-i18next';
+import { ToastContainer } from 'react-toastify';
 import { selectors, actions as channelsActions } from '../../slices/channelsSlice';
 import getModal from '../modals';
+import 'react-toastify/dist/ReactToastify.css';
 
 const Channels = () => {
   const [modalInfo, setModalInfo] = useState({ type: null, channel: null });
@@ -77,6 +79,8 @@ const Channels = () => {
       </ul>
 
       {renderModal()}
+
+      <ToastContainer />
     </>
   );
 };

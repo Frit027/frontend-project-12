@@ -2,6 +2,7 @@ import React, { useContext } from 'react';
 import { Modal, Button } from 'react-bootstrap';
 import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
+import { toast } from 'react-toastify';
 import SocketContext from '../../contexts';
 
 const RemoveChannel = ({ modalInfo, hideModal }) => {
@@ -11,6 +12,7 @@ const RemoveChannel = ({ modalInfo, hideModal }) => {
   const handleRemove = () => {
     removeChannel(modalInfo.channel.id);
     hideModal();
+    toast.success(t('titles.channelRemoved'));
   };
 
   return (

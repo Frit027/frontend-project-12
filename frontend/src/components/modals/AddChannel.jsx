@@ -2,6 +2,7 @@ import React, { useContext } from 'react';
 import { Modal } from 'react-bootstrap';
 import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
+import { toast } from 'react-toastify';
 import SocketContext from '../../contexts';
 import ChannelNameForm from '../forms/ChannelNameForm';
 
@@ -11,6 +12,7 @@ const AddChannel = ({ hideModal }) => {
 
   const handleSubmit = (name) => {
     addNewChannel(name);
+    toast.success(t('titles.channelAdded'));
   };
 
   return (

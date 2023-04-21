@@ -3,7 +3,7 @@ import { Modal, Button } from 'react-bootstrap';
 import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
 import { toast } from 'react-toastify';
-import SocketContext from '../../contexts';
+import { SocketContext } from '../providers/SocketProvider';
 
 const RemoveChannel = ({ modalInfo, hideModal }) => {
   const { t } = useTranslation();

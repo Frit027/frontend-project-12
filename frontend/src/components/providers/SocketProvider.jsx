@@ -1,9 +1,10 @@
-import React, { useMemo } from 'react';
+import React, { createContext, useMemo } from 'react';
 import { Socket } from 'socket.io-client';
 import PropTypes from 'prop-types';
-import SocketContext from '../../contexts';
 import store from '../../slices';
 import { actions as channelsActions } from '../../slices/channelsSlice';
+
+export const SocketContext = createContext({});
 
 const SocketProvider = ({ children, socket }) => {
   const addNewMessage = (body, id, resolve) => socket.emit('newMessage', { body, channelId: id }, (response) => {
@@ -22,7 +23,7 @@ const SocketProvider = ({ children, socket }) => {
 
   const value = useMemo(() => ({
     addNewMessage, addNewChannel, removeChannel, renameChannel,
-  }), []);
+  }), [addNewMessage, addNewChannel, removeChannel, renameChannel]);
 
   return (
     <SocketContext.Provider value={value}>

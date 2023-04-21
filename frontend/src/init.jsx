@@ -4,6 +4,7 @@ import React from 'react';
 import { Provider } from 'react-redux';
 import { io } from 'socket.io-client';
 import { initReactI18next, I18nextProvider } from 'react-i18next';
+import filter from 'leo-profanity';
 import ru from './locales/ru';
 import store from './slices';
 import SocketProvider from './components/providers/SocketProvider';
@@ -21,6 +22,8 @@ export default async () => {
         ru,
       },
     });
+
+  filter.add(filter.getDictionary('ru'));
 
   const socket = io();
 

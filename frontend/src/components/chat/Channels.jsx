@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Button, ButtonGroup, Dropdown } from 'react-bootstrap';
 import { useTranslation } from 'react-i18next';
 import { ToastContainer } from 'react-toastify';
+import filter from 'leo-profanity';
 import { selectors, actions as channelsActions } from '../../slices/channelsSlice';
 import getModal from '../modals';
 import 'react-toastify/dist/ReactToastify.css';
@@ -25,7 +26,7 @@ const Channels = () => {
       onClick={() => dispatch(channelsActions.setCurrentChannelId(channel.id))}
     >
       <span className="me-1">{t('signs.hash')}</span>
-      {channel.name}
+      {filter.clean(channel.name)}
     </Button>
   );
 

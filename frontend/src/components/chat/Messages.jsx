@@ -5,8 +5,9 @@ import { useSelector } from 'react-redux';
 import Form from 'react-bootstrap/Form';
 import InputGroup from 'react-bootstrap/InputGroup';
 import { useTranslation } from 'react-i18next';
+import filter from 'leo-profanity';
 import { selectors as channelSelectors } from '../../slices/channelsSlice';
-import SocketContext from '../../contexts';
+import { SocketContext } from '../providers/SocketProvider';
 
 const Messages = () => {
   const [body, setBody] = useState('');
@@ -48,12 +49,14 @@ const Messages = () => {
   return (
     <div className="d-flex flex-column h-100">
       <div className="bg-light mb-4 p-3 shadow-sm small">
-        <p className="m-0"><b>{currentChannel ? t('titles.channel', { name: currentChannel.name }) : ''}</b></p>
+        <p className="m-0">
+          <b>{currentChannel ? t('titles.channel', { name: filter.clean(currentChannel.name) }) : ''}</b>
+        </p>
         <span className="text-muted">{t('titles.message', { count: messages.length })}</span>
       </div>
       <div className="overflow-auto px-5">
         {messages.map((message) => (
-          <div className="text-break mb-2">{message.body}</div>
+          <div className="text-break mb-2">{filter.clean(message.body)}</div>
         ))}
       </div>
       <div className="mt-auto px-5 py-3">

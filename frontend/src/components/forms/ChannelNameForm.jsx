@@ -5,6 +5,7 @@ import * as yup from 'yup';
 import { useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
+import filter from 'leo-profanity';
 import { selectors } from '../../slices/channelsSlice';
 
 const ChannelNameForm = ({ currentName, handleSubmit, hideModal }) => {
@@ -22,7 +23,7 @@ const ChannelNameForm = ({ currentName, handleSubmit, hideModal }) => {
 
   const formik = useFormik({
     initialValues: {
-      name: currentName,
+      name: filter.clean(currentName),
     },
     validationSchema: yup.object({
       name: yup.string()
@@ -47,7 +48,7 @@ const ChannelNameForm = ({ currentName, handleSubmit, hideModal }) => {
           name="name"
           ref={input}
           onChange={formik.handleChange}
-          value={formik.values.name}
+          value={formik.touched.name && formik.errors.name ? filter.clean(formik.values.name) : formik.values.name}
           autocomplete="off"
           isInvalid={formik.touched.name && formik.errors.name}
         />

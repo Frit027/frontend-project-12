@@ -5,6 +5,7 @@ import { Provider } from 'react-redux';
 import { io } from 'socket.io-client';
 import { initReactI18next, I18nextProvider } from 'react-i18next';
 import filter from 'leo-profanity';
+import { Provider as RollbarProvider, ErrorBoundary } from '@rollbar/react';
 import ru from './locales/ru';
 import store from './slices';
 import SocketProvider from './components/providers/SocketProvider';
@@ -13,6 +14,11 @@ import { actions as messagesActions } from './slices/messagesSlice';
 import { actions as channelsActions } from './slices/channelsSlice';
 
 export default async () => {
+  const rollbarConfig = {
+    accessToken: '5ee9b79f162a4e2eafed2e38f0e373ea',
+    environment: 'testenv',
+  };
+
   const i18nextInstance = i18n.createInstance();
   await i18nextInstance
     .use(initReactI18next)
@@ -48,14 +54,18 @@ export default async () => {
 
   const root = ReactDOM.createRoot(document.getElementById('chat'));
   root.render(
-    <React.StrictMode>
-      <Provider store={store}>
-        <SocketProvider socket={socket}>
-          <I18nextProvider i18n={i18nextInstance}>
-            <App />
-          </I18nextProvider>
-        </SocketProvider>
-      </Provider>
-    </React.StrictMode>,
+    <RollbarProvider config={rollbarConfig}>
+      <ErrorBoundary>
+        <React.StrictMode>
+          <Provider store={store}>
+            <SocketProvider socket={socket}>
+              <I18nextProvider i18n={i18nextInstance}>
+                <App />
+              </I18nextProvider>
+            </SocketProvider>
+          </Provider>
+        </React.StrictMode>
+      </ErrorBoundary>
+    </RollbarProvider>,
   );
 };

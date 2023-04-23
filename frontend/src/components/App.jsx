@@ -8,8 +8,8 @@ import Header from './elements/Header';
 
 const App = () => (
   <div className="d-flex flex-column h-100">
-    <Header />
     <BrowserRouter>
+      <Header />
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="login" element={<Login />} />

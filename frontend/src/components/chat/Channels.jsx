@@ -76,7 +76,7 @@ const Channels = () => {
 
       <ul className="nav flex-column nav-pills nav-fill px-2 mb-3 overflow-auto h-100 d-block">
         {channels.map((channel) => (
-          <li className="nav-item w-100">
+          <li key={channel.id} className="nav-item w-100">
             {channel.removable ? renderDropdownButton(channel) : renderButton(channel)}
           </li>
         ))}

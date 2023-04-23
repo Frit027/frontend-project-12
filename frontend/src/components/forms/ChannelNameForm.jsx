@@ -46,7 +46,9 @@ const ChannelNameForm = ({ currentName, handleSubmit, hideModal }) => {
           name="name"
           ref={input}
           onChange={formik.handleChange}
-          value={formik.touched.name && formik.errors.name ? filter.clean(formik.values.name) : formik.values.name}
+          value={formik.touched.name && formik.errors.name
+            ? filter.clean(formik.values.name)
+            : formik.values.name}
           autocomplete="off"
           isInvalid={formik.touched.name && formik.errors.name}
         />

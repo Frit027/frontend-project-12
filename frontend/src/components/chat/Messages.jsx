@@ -16,9 +16,13 @@ const Messages = () => {
   const button = useRef();
   const { t } = useTranslation();
   const currentChannelId = useSelector((state) => state.channels.currentChannelId);
-  const currentChannel = useSelector((state) => channelSelectors.selectById(state, currentChannelId));
+  const currentChannel = useSelector(
+    (state) => channelSelectors.selectById(state, currentChannelId),
+  );
   const messages = useSelector(
-    (state) => Object.values(state.messages.entities).filter((message) => message.channelId === currentChannelId),
+    (state) => Object
+      .values(state.messages.entities)
+      .filter((message) => message.channelId === currentChannelId),
   );
 
   useEffect(() => {
@@ -57,7 +61,7 @@ const Messages = () => {
       </div>
       <div className="overflow-auto px-5">
         {messages.map((message) => (
-          <div className="text-break mb-2">
+          <div key={message.id} className="text-break mb-2">
             <b>{message.username}</b>
             {`${t('signs.colon')} ${filter.clean(message.body)}`}
           </div>

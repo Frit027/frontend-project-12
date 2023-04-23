@@ -21,7 +21,11 @@ const RenameChannel = ({ modalInfo, hideModal }) => {
         <Modal.Title>{t('titles.renameChannel')}</Modal.Title>
       </Modal.Header>
       <Modal.Body>
-        <ChannelNameForm currentName={modalInfo.channel.name} handleSubmit={handleSubmit} hideModal={hideModal} />
+        <ChannelNameForm
+          currentName={modalInfo.channel.name}
+          handleSubmit={handleSubmit}
+          hideModal={hideModal}
+        />
       </Modal.Body>
     </Modal>
   );

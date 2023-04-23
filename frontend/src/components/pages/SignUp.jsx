@@ -36,7 +36,7 @@ const SignUp = () => {
     onSubmit: async ({ username, password }) => {
       try {
         const { data } = await axios.post('/api/v1/signup', { username, password });
-        localStorage.setItem('token', data.token);
+        localStorage.setItem('userData', JSON.stringify({ token: data.token, username: data.username }));
         navigate('/');
       } catch (err) {
         formik.setSubmitting(false);

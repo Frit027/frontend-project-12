@@ -27,7 +27,7 @@ const Login = () => {
       setIsAuthFailed(false);
       try {
         const { data } = await axios.post('/api/v1/login', values);
-        localStorage.setItem('token', data.token);
+        localStorage.setItem('userData', JSON.stringify({ token: data.token, username: data.username }));
         navigate('/');
       } catch (err) {
         formik.setSubmitting(false);

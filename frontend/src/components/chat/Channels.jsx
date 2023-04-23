@@ -33,7 +33,9 @@ const Channels = () => {
   const renderDropdownButton = (channel) => (
     <Dropdown className="d-flex" as={ButtonGroup}>
       {renderButton(channel)}
-      <Dropdown.Toggle className="flex-grow-0" split variant={channel.id === currentChannelId ? 'secondary' : ''} />
+      <Dropdown.Toggle className="flex-grow-0" split variant={channel.id === currentChannelId ? 'secondary' : ''}>
+        <span className="visually-hidden">{t('titles.channelManagement')}</span>
+      </Dropdown.Toggle>
       <Dropdown.Menu>
         <Dropdown.Item onClick={() => showModal('removing', channel)}>{t('actions.remove')}</Dropdown.Item>
         <Dropdown.Item onClick={() => showModal('renaming', channel)}>{t('actions.rename')}</Dropdown.Item>
@@ -68,7 +70,7 @@ const Channels = () => {
               d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"
             />
           </svg>
-          <span className="visually-hidden">+</span>
+          <span className="visually-hidden">{t('signs.plus')}</span>
         </button>
       </div>
 

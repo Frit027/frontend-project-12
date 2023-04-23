@@ -71,6 +71,7 @@ const Messages = () => {
               name="body"
               className="border-0 p-0 ps-2"
               placeholder={t('placeholders.enterMessage')}
+              aria-label={t('labels.newMessage')}
               onChange={handleChange}
               value={body}
               autocomplete="off"

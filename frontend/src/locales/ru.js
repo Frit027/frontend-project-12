@@ -64,6 +64,7 @@ export default {
       password: 'Пароль',
       confirmPassword: 'Подтвердите пароль',
       channelName: 'Имя канала',
+      newMessage: 'Новое сообщение',
     },
     questions: {
       sure: 'Уверены?',

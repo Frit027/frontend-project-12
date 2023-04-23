@@ -7,11 +7,13 @@ import { actions as channelsActions } from '../../slices/channelsSlice';
 export const SocketContext = createContext({});
 
 const SocketProvider = ({ children, socket }) => {
-  const addNewMessage = (body, id, resolve) => socket.emit('newMessage', { body, channelId: id }, (response) => {
-    if (response.status === 'ok') {
-      resolve();
-    }
-  });
+  const addNewMessage = (body, username, channelId, resolve) => {
+    socket.emit('newMessage', { body, username, channelId }, (response) => {
+      if (response.status === 'ok') {
+        resolve();
+      }
+    });
+  };
 
   const addNewChannel = (name) => socket.emit('newChannel', { name }, ({ data }) => {
     store.dispatch(channelsActions.setCurrentChannelId(data.id));

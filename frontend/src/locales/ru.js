@@ -24,6 +24,7 @@ export default {
       channelRemoved: 'Канал удалён',
       channelRenamed: 'Канал переименован',
       notFound: 'Страница не найдена',
+      channelManagement: 'Управление каналом',
     },
     loginForm: {
       errors: {
@@ -74,6 +75,7 @@ export default {
       canRedirect: 'Но вы можете перейти ',
     },
     signs: {
+      plus: '+',
       hash: '#',
       colon: ':',
     },

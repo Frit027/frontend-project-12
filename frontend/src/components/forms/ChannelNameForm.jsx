@@ -41,7 +41,6 @@ const ChannelNameForm = ({ currentName, handleSubmit, hideModal }) => {
   return (
     <form onSubmit={formik.handleSubmit}>
       <Form.Group>
-        <Form.Label class="visually-hidden">{t('labels.channelName')}</Form.Label>
         <Form.Control
           className="mb-2"
           id="name"
@@ -52,6 +51,7 @@ const ChannelNameForm = ({ currentName, handleSubmit, hideModal }) => {
           autocomplete="off"
           isInvalid={formik.touched.name && formik.errors.name}
         />
+        <Form.Label class="visually-hidden">{t('labels.channelName')}</Form.Label>
         <Form.Control.Feedback type="invalid">{formik.errors.name}</Form.Control.Feedback>
       </Form.Group>
 

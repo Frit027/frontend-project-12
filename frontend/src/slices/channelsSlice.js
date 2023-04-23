@@ -14,6 +14,7 @@ const channelsSlice = createSlice({
     updateChannel: channelsAdapter.updateOne,
 
     setCurrentChannelId: (state, action) => {
+      // eslint-disable-next-line no-param-reassign
       state.currentChannelId = action.payload;
     },
   },

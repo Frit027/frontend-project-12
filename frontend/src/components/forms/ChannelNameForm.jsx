@@ -40,10 +40,9 @@ const ChannelNameForm = ({ currentName, handleSubmit, hideModal }) => {
 
   return (
     <form onSubmit={formik.handleSubmit}>
-      <Form.Group>
+      <Form.Group controlId="name">
         <Form.Control
           className="mb-2"
-          id="name"
           name="name"
           ref={input}
           onChange={formik.handleChange}
@@ -53,12 +52,12 @@ const ChannelNameForm = ({ currentName, handleSubmit, hideModal }) => {
         />
         <Form.Label class="visually-hidden">{t('labels.channelName')}</Form.Label>
         <Form.Control.Feedback type="invalid">{formik.errors.name}</Form.Control.Feedback>
-      </Form.Group>
 
-      <div className="d-flex justify-content-end">
-        <Button className="me-2" variant="secondary" onClick={hideModal}>{t('actions.cancel')}</Button>
-        <Button variant="primary" type="submit">{t('actions.send')}</Button>
-      </div>
+        <div className="d-flex justify-content-end">
+          <Button className="me-2" variant="secondary" onClick={hideModal}>{t('actions.cancel')}</Button>
+          <Button variant="primary" type="submit">{t('actions.send')}</Button>
+        </div>
+      </Form.Group>
     </form>
   );
 };

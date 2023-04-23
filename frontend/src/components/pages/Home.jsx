@@ -11,24 +11,25 @@ import Channels from '../chat/Channels';
 import Messages from '../chat/Messages';
 
 const Home = () => {
-  const token = localStorage.getItem('token');
+  const userData = JSON.parse(localStorage.getItem('userData'));
   const dispatch = useDispatch();
 
   useEffect(() => {
     const fetchData = async () => {
+      const { token } = userData;
       const { data } = await axios.get('/api/v1/data', { headers: token ? { Authorization: `Bearer ${token}` } : {} });
       dispatch(channelsActions.addChannels(data.channels));
       dispatch(messagesActions.addMessages(data.messages));
       dispatch(channelsActions.setCurrentChannelId(data.currentChannelId));
     };
 
-    if (token) {
+    if (userData) {
       fetchData();
     }
   }, []);
 
   return (
-    token
+    userData
       ? (
         <Container className="h-100 my-4 overflow-hidden rounded shadow">
           <Row className="h-100 bg-white flex-md-row">

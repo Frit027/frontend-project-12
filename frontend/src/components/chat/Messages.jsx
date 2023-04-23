@@ -42,7 +42,8 @@ const Messages = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    addNewMessage(body, currentChannelId, messageDelivered);
+    const { username } = JSON.parse(localStorage.getItem('userData'));
+    addNewMessage(body, username, currentChannelId, messageDelivered);
     sending();
   };
 
@@ -56,7 +57,10 @@ const Messages = () => {
       </div>
       <div className="overflow-auto px-5">
         {messages.map((message) => (
-          <div className="text-break mb-2">{filter.clean(message.body)}</div>
+          <div className="text-break mb-2">
+            <b>{message.username}</b>
+            {`${t('signs.colon')} ${filter.clean(message.body)}`}
+          </div>
         ))}
       </div>
       <div className="mt-auto px-5 py-3">

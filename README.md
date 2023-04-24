@@ -2,11 +2,13 @@
 
 # Web Chat
 
-## Description
+## About
 This repository presents the code for the frontend of the project.  
 The website is a list of open chat rooms (channels) similar to Slack.
 Users can register on the website and also create new channels visible to all.
-Created channels can be deleted and renamed.  
+Created channels can be deleted and renamed.
+
+### Demonstration
 Web chat is available at the [link](https://frontend-project-12-production-bf25.up.railway.app/).
 
 ## Dependencies
@@ -16,11 +18,11 @@ Web chat is available at the [link](https://frontend-project-12-production-bf25.
 ## Installation and launch
 - clone the repository;
 - inside the [frontend](frontend) directory run commands:
-    - npm install.
+    - `npm install`
 - inside root:
-  - npm install;
-  - npm run build;
-  - npm start.
+  - `npm install`
+  - `npm run build`
+  - `npm start`
 
 ## Technologies
 - Main:

@@ -29,6 +29,7 @@ Web chat is available at the [link](https://frontend-project-12-production-bf25.
   - [ECMAScript 2021](https://www.w3schools.com/js/js_2021.asp)
   - [React](https://react.dev/) `[18.2.0]`
   - [Redux Toolkit](https://redux-toolkit.js.org/) `[1.9.3]`
+  - [socket.io](https://socket.io/) `[4.6.1]` - for messaging
 - Interface:
   - [Bootstrap](https://getbootstrap.com/) `[5.0]`
 - Auxiliary:

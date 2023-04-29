@@ -16,6 +16,7 @@ const Messages = () => {
   const { getUsername } = useContext(AuthContext);
   const input = useRef();
   const button = useRef();
+  const messagesEnd = useRef();
   const { t } = useTranslation();
   const currentChannelId = useSelector((state) => state.channels.currentChannelId);
   const currentChannel = useSelector(
@@ -27,8 +28,17 @@ const Messages = () => {
       .filter((message) => message.channelId === currentChannelId),
   );
 
+  const scrollToBottom = () => {
+    messagesEnd.current?.scrollIntoView();
+  };
+
   useEffect(() => {
-    input.current.focus();
+    scrollToBottom();
+  }, [messages]);
+
+  useEffect(() => {
+    input.current?.focus();
+    scrollToBottom();
   }, [currentChannelId]);
 
   const handleChange = (e) => {
@@ -67,6 +77,7 @@ const Messages = () => {
             {`${t('signs.colon')} ${filter.clean(message.body)}`}
           </div>
         ))}
+        <span ref={messagesEnd} />
       </div>
       <div className="mt-auto px-5 py-3">
         <Form className="py-1 border rounded-2" onSubmit={handleSubmit}>

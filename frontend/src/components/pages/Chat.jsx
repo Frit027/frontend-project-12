@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useContext, useEffect } from 'react';
 import { Navigate } from 'react-router-dom';
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
@@ -9,27 +9,28 @@ import { actions as channelsActions } from '../../slices/channelsSlice';
 import { actions as messagesActions } from '../../slices/messagesSlice';
 import Channels from '../chat/Channels';
 import Messages from '../chat/Messages';
+import { AuthContext } from '../providers/AuthProvider';
 
 const Chat = () => {
-  const userData = JSON.parse(localStorage.getItem('userData'));
+  const { isLoggedIn, getToken } = useContext(AuthContext);
+  const token = getToken();
   const dispatch = useDispatch();
 
   useEffect(() => {
     const fetchData = async () => {
-      const { token } = userData;
       const { data } = await axios.get('/api/v1/data', { headers: token ? { Authorization: `Bearer ${token}` } : {} });
       dispatch(channelsActions.addChannels(data.channels));
       dispatch(messagesActions.addMessages(data.messages));
       dispatch(channelsActions.setCurrentChannelId(data.currentChannelId));
     };
 
-    if (userData) {
+    if (token) {
       fetchData();
     }
   }, []);
 
   return (
-    userData
+    isLoggedIn()
       ? (
         <Container className="h-100 my-4 overflow-hidden rounded shadow">
           <Row className="h-100 bg-white flex-md-row">

@@ -1,15 +1,16 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { Button, Container, Navbar } from 'react-bootstrap';
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
+import { AuthContext } from '../providers/AuthProvider';
 
 const Header = () => {
-  const userData = JSON.parse(localStorage.getItem('userData'));
+  const { isLoggedIn, logOut } = useContext(AuthContext);
   const navigate = useNavigate();
   const { t } = useTranslation();
 
-  const logOut = () => {
-    localStorage.removeItem('userData');
+  const handleClick = () => {
+    logOut();
     navigate('/login');
   };
 
@@ -17,8 +18,8 @@ const Header = () => {
     <Navbar className="shadow-sm" expand="lg" variant="light" bg="white">
       <Container>
         <Navbar.Brand href="/">{t('links.home')}</Navbar.Brand>
-        {userData
-          ? <Button type="button" variant="primary" onClick={logOut}>{t('actions.logout')}</Button>
+        {isLoggedIn()
+          ? <Button type="button" variant="primary" onClick={handleClick}>{t('actions.logout')}</Button>
           : null}
       </Container>
     </Navbar>

@@ -8,10 +8,12 @@ import { useTranslation } from 'react-i18next';
 import filter from 'leo-profanity';
 import { selectors as channelSelectors } from '../../slices/channelsSlice';
 import { SocketContext } from '../providers/SocketProvider';
+import { AuthContext } from '../providers/AuthProvider';
 
 const Messages = () => {
   const [body, setBody] = useState('');
   const { addNewMessage } = useContext(SocketContext);
+  const { getUsername } = useContext(AuthContext);
   const input = useRef();
   const button = useRef();
   const { t } = useTranslation();
@@ -46,8 +48,7 @@ const Messages = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    const { username } = JSON.parse(localStorage.getItem('userData'));
-    addNewMessage(body, username, currentChannelId, messageDelivered);
+    addNewMessage(body, getUsername(), currentChannelId, messageDelivered);
     sending();
   };
 

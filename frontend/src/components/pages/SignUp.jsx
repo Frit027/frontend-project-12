@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React, { useContext, useRef } from 'react';
 import {
   Button, Card, Col, Container, FloatingLabel, Form, Image, Row,
 } from 'react-bootstrap';
@@ -8,8 +8,10 @@ import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import SignUpImage from '../../images/signup.jpg';
+import { AuthContext } from '../providers/AuthProvider';
 
 const SignUp = () => {
+  const { logIn } = useContext(AuthContext);
   const navigate = useNavigate();
   const inputUsername = useRef();
   const { t } = useTranslation();
@@ -36,7 +38,7 @@ const SignUp = () => {
     onSubmit: async ({ username, password }) => {
       try {
         const { data } = await axios.post('/api/v1/signup', { username, password });
-        localStorage.setItem('userData', JSON.stringify({ token: data.token, username: data.username }));
+        logIn(data);
         navigate('/');
       } catch (err) {
         formik.setSubmitting(false);

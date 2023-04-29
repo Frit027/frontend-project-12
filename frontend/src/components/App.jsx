@@ -2,7 +2,7 @@ import React from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import Login from './pages/Login';
 import SignUp from './pages/SignUp';
-import Home from './pages/Home';
+import Chat from './pages/Chat';
 import NotFound from './pages/NotFound';
 import Header from './elements/Header';
 
@@ -11,7 +11,7 @@ const App = () => (
     <BrowserRouter>
       <Header />
       <Routes>
-        <Route path="/" element={<Home />} />
+        <Route path="/" element={<Chat />} />
         <Route path="login" element={<Login />} />
         <Route path="signup" element={<SignUp />} />
         <Route path="*" element={<NotFound />} />

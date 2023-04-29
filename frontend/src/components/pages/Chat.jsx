@@ -10,7 +10,7 @@ import { actions as messagesActions } from '../../slices/messagesSlice';
 import Channels from '../chat/Channels';
 import Messages from '../chat/Messages';
 
-const Home = () => {
+const Chat = () => {
   const userData = JSON.parse(localStorage.getItem('userData'));
   const dispatch = useDispatch();
 
@@ -46,4 +46,4 @@ const Home = () => {
   );
 };
 
-export default Home;
+export default Chat;

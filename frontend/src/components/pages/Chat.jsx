@@ -1,5 +1,4 @@
 import React, { useContext, useEffect } from 'react';
-import { Navigate } from 'react-router-dom';
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
@@ -12,7 +11,7 @@ import Messages from '../chat/Messages';
 import { AuthContext } from '../providers/AuthProvider';
 
 const Chat = () => {
-  const { isLoggedIn, getToken } = useContext(AuthContext);
+  const { getToken } = useContext(AuthContext);
   const token = getToken();
   const dispatch = useDispatch();
 
@@ -30,20 +29,16 @@ const Chat = () => {
   }, []);
 
   return (
-    isLoggedIn()
-      ? (
-        <Container className="h-100 my-4 overflow-hidden rounded shadow">
-          <Row className="h-100 bg-white flex-md-row">
-            <Col className="col-4 col-md-2 border-end px-0 bg-light flex-column h-100 d-flex">
-              <Channels />
-            </Col>
-            <Col className="col p-0 h-100">
-              <Messages />
-            </Col>
-          </Row>
-        </Container>
-      )
-      : <Navigate to="/login" />
+    <Container className="h-100 my-4 overflow-hidden rounded shadow">
+      <Row className="h-100 bg-white flex-md-row">
+        <Col className="col-4 col-md-2 border-end px-0 bg-light flex-column h-100 d-flex">
+          <Channels />
+        </Col>
+        <Col className="col p-0 h-100">
+          <Messages />
+        </Col>
+      </Row>
+    </Container>
   );
 };
 

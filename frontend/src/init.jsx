@@ -9,6 +9,7 @@ import { Provider as RollbarProvider, ErrorBoundary } from '@rollbar/react';
 import ru from './locales/ru';
 import store from './slices';
 import SocketProvider from './components/providers/SocketProvider';
+import AuthProvider from './components/providers/AuthProvider';
 import App from './components/App';
 import { actions as messagesActions } from './slices/messagesSlice';
 import { actions as channelsActions } from './slices/channelsSlice';
@@ -60,7 +61,9 @@ export default async () => {
           <Provider store={store}>
             <SocketProvider socket={socket}>
               <I18nextProvider i18n={i18nextInstance}>
-                <App />
+                <AuthProvider>
+                  <App />
+                </AuthProvider>
               </I18nextProvider>
             </SocketProvider>
           </Provider>

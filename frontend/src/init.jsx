@@ -16,8 +16,10 @@ import { actions as channelsActions } from './slices/channelsSlice';
 
 export default async () => {
   const rollbarConfig = {
-    accessToken: '5ee9b79f162a4e2eafed2e38f0e373ea',
-    environment: 'testenv',
+    enabled: true,
+    accessToken: process.env.REACT_APP_ROLLBAR_TOKEN,
+    captureUncaught: true,
+    captureUnhandledRejections: true,
   };
 
   const i18nextInstance = i18n.createInstance();

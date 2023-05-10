@@ -1,16 +1,21 @@
 import React, { useContext } from 'react';
 import { Modal, Button } from 'react-bootstrap';
-import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
 import { toast } from 'react-toastify';
+import { useDispatch, useSelector } from 'react-redux';
 import { SocketContext } from '../providers/SocketProvider';
+import { actions } from '../../slices/modalsSlice';
 
-const RemoveChannel = ({ modalInfo, hideModal }) => {
+const RemoveChannel = () => {
+  const dispatch = useDispatch();
   const { t } = useTranslation();
   const { removeChannel } = useContext(SocketContext);
+  const channel = useSelector((state) => state.modals.channel);
+
+  const hideModal = () => dispatch(actions.hideModal());
 
   const handleRemove = () => {
-    removeChannel(modalInfo.channel.id);
+    removeChannel(channel.id);
     hideModal();
     toast.success(t('titles.channelRemoved'));
   };
@@ -29,15 +34,6 @@ const RemoveChannel = ({ modalInfo, hideModal }) => {
       </Modal.Body>
     </Modal>
   );
-};
-
-RemoveChannel.propTypes = {
-  modalInfo: PropTypes.shape,
-  hideModal: PropTypes.func.isRequired,
-};
-
-RemoveChannel.defaultProps = {
-  modalInfo: { type: null, channel: null },
 };
 
 export default RemoveChannel;

@@ -1,23 +1,22 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Button, ButtonGroup, Dropdown } from 'react-bootstrap';
 import { useTranslation } from 'react-i18next';
 import { ToastContainer } from 'react-toastify';
 import filter from 'leo-profanity';
 import { selectors, actions as channelsActions } from '../../slices/channelsSlice';
+import { actions as modalsActions } from '../../slices/modalsSlice';
 import getModal from '../modals';
 import 'react-toastify/dist/ReactToastify.css';
 
 const Channels = () => {
-  const [modalInfo, setModalInfo] = useState({ type: null, channel: null });
   const dispatch = useDispatch();
   const channels = useSelector(selectors.selectAll);
+  const modalType = useSelector((state) => state.modals.type);
   const currentChannelId = useSelector((state) => state.channels.currentChannelId);
   const { t } = useTranslation();
 
-  const hideModal = () => setModalInfo({ type: null, channel: null });
-
-  const showModal = (type, channel = null) => setModalInfo({ type, channel });
+  const showModal = (type, channel = null) => dispatch(modalsActions.showModal({ type, channel }));
 
   const renderButton = (channel) => (
     <Button
@@ -44,12 +43,12 @@ const Channels = () => {
   );
 
   const renderModal = () => {
-    if (!modalInfo.type) {
+    if (!modalType) {
       return null;
     }
 
-    const Component = getModal(modalInfo.type);
-    return <Component modalInfo={modalInfo} hideModal={hideModal} />;
+    const Component = getModal(modalType);
+    return <Component />;
   };
 
   return (

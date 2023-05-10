@@ -1,12 +1,14 @@
 import React, { useContext } from 'react';
 import { Modal } from 'react-bootstrap';
-import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
 import { toast } from 'react-toastify';
+import { useDispatch } from 'react-redux';
 import { SocketContext } from '../providers/SocketProvider';
+import { actions } from '../../slices/modalsSlice';
 import ChannelNameForm from '../forms/ChannelNameForm';
 
-const AddChannel = ({ hideModal }) => {
+const AddChannel = () => {
+  const dispatch = useDispatch();
   const { t } = useTranslation();
   const { addNewChannel } = useContext(SocketContext);
 
@@ -16,19 +18,15 @@ const AddChannel = ({ hideModal }) => {
   };
 
   return (
-    <Modal show centered onHide={hideModal}>
+    <Modal show centered onHide={() => dispatch(actions.hideModal())}>
       <Modal.Header closeButton>
         <Modal.Title>{t('titles.addChannel')}</Modal.Title>
       </Modal.Header>
       <Modal.Body>
-        <ChannelNameForm handleSubmit={handleSubmit} hideModal={hideModal} />
+        <ChannelNameForm handleSubmit={handleSubmit} />
       </Modal.Body>
     </Modal>
   );
-};
-
-AddChannel.propTypes = {
-  hideModal: PropTypes.func.isRequired,
 };
 
 export default AddChannel;

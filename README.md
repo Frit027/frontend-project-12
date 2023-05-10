@@ -36,3 +36,12 @@ Web chat is available at the [link](https://frontend-project-12-production-bf25.
   - [i18next](https://www.i18next.com/) - a framework for easy text handling
   - [leo-profanity](https://github.com/jojoee/leo-profanity) - profanity filter
   - [Rollbar React](https://docs.rollbar.com/docs/react) - automatic error checking service
+
+## Site screenshots
+Below are some demonstration examples of how the site works.
+### Login page
+![Login page](screenshots/login.png "Login page")
+### Chat page
+![Chat page](screenshots/chat.png "Chat page")
+### New channel modal
+![New channel modal](screenshots/new-channel.png "New channel modal")

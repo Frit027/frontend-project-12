@@ -2,16 +2,20 @@ import React, { useEffect, useRef } from 'react';
 import { Form, Button } from 'react-bootstrap';
 import { useFormik } from 'formik';
 import * as yup from 'yup';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
 import filter from 'leo-profanity';
 import { selectors } from '../../slices/channelsSlice';
+import { actions } from '../../slices/modalsSlice';
 
-const ChannelNameForm = ({ currentName, handleSubmit, hideModal }) => {
+const ChannelNameForm = ({ currentName, handleSubmit }) => {
   const input = useRef();
+  const dispatch = useDispatch();
   const { t } = useTranslation();
   const channelNames = useSelector(selectors.selectAll).map((channel) => channel.name);
+
+  const hideModal = () => dispatch(actions.hideModal());
 
   useEffect(() => {
     if (currentName) {
@@ -67,7 +71,6 @@ const ChannelNameForm = ({ currentName, handleSubmit, hideModal }) => {
 ChannelNameForm.propTypes = {
   currentName: PropTypes.string,
   handleSubmit: PropTypes.func.isRequired,
-  hideModal: PropTypes.func.isRequired,
 };
 
 ChannelNameForm.defaultProps = {

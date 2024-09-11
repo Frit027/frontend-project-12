@@ -17,7 +17,7 @@ Web chat is available at the [link](https://frontend-project-12-production-bf25.
 
 ## Installation and launch
 - clone the repository;
-- inside the [frontend](frontend) directory run commands:
+- inside the [frontend](frontend) directory run command:
     - `npm install`
 - inside root:
   - `npm install`

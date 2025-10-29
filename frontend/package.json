@@ -26,6 +26,7 @@
     "yup": "^1.0.2"
   },
   "scripts": {
+    "lint": "eslint .",
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",

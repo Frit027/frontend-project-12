@@ -15,11 +15,11 @@ const Header = () => {
     };
 
     return (
-        <Navbar className="shadow-sm" expand="lg" variant="light" bg="white">
+        <Navbar className='shadow-sm' expand='lg' variant='light' bg='white'>
             <Container>
-                <Navbar.Brand href="/">{t('links.home')}</Navbar.Brand>
+                <Navbar.Brand href='/'>{t('links.home')}</Navbar.Brand>
                 {isLoggedIn()
-                    ? <Button type="button" variant="primary" onClick={handleClick}>{t('actions.logout')}</Button>
+                    ? <Button type='button' variant='primary' onClick={handleClick}>{t('actions.logout')}</Button>
                     : null}
             </Container>
         </Navbar>

@@ -26,10 +26,10 @@ const RemoveChannel = () => {
                 <Modal.Title>{t('titles.removeChannel')}</Modal.Title>
             </Modal.Header>
             <Modal.Body>
-                <p className="lead">{t('questions.sure')}</p>
-                <div className="d-flex justify-content-end">
-                    <Button className="me-2" variant="secondary" onClick={hideModal}>{t('actions.cancel')}</Button>
-                    <Button variant="danger" onClick={handleRemove}>{t('actions.remove')}</Button>
+                <p className='lead'>{t('questions.sure')}</p>
+                <div className='d-flex justify-content-end'>
+                    <Button className='me-2' variant='secondary' onClick={hideModal}>{t('actions.cancel')}</Button>
+                    <Button variant='danger' onClick={handleRemove}>{t('actions.remove')}</Button>
                 </div>
             </Modal.Body>
         </Modal>

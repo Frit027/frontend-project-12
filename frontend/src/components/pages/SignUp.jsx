@@ -52,23 +52,23 @@ const SignUp = () => {
     });
 
     return (
-        <Container className="h-100" fluid>
-            <Row className="justify-content-center align-content-center h-100">
+        <Container className='h-100' fluid>
+            <Row className='justify-content-center align-content-center h-100'>
                 <Col xs={12} md={8} xxl={6}>
-                    <Card className="shadow-sm">
-                        <Card.Body className="d-flex flex-column flex-md-row justify-content-around align-items-center p-5">
+                    <Card className='shadow-sm'>
+                        <Card.Body className='d-flex flex-column flex-md-row justify-content-around align-items-center p-5'>
                             <div>
                                 <Image src={SignUpImage} alt={t('titles.registration')} roundedCircle />
                             </div>
-                            <Form className="w-50" onSubmit={formik.handleSubmit}>
-                                <h1 className="text-center mb-4">{t('titles.registration')}</h1>
-                                <FloatingLabel controlId="username" className="mb-3" label={t('labels.username')}>
+                            <Form className='w-50' onSubmit={formik.handleSubmit}>
+                                <h1 className='text-center mb-4'>{t('titles.registration')}</h1>
+                                <FloatingLabel controlId='username' className='mb-3' label={t('labels.username')}>
                                     <Form.Control
-                                        type="text"
-                                        id="username"
-                                        name="username"
+                                        type='text'
+                                        id='username'
+                                        name='username'
                                         placeholder={t('placeholders.username')}
-                                        autocomplete="username"
+                                        autocomplete='username'
                                         value={formik.values.username}
                                         onChange={formik.handleChange}
                                         isInvalid={
@@ -76,17 +76,17 @@ const SignUp = () => {
                                         }
                                         ref={inputUsername}
                                     />
-                                    <Form.Control.Feedback type="invalid" tooltip>
+                                    <Form.Control.Feedback type='invalid' tooltip>
                                         {formik.errors.username}
                                     </Form.Control.Feedback>
                                 </FloatingLabel>
-                                <FloatingLabel controlId="password" className="mb-3" label={t('labels.password')}>
+                                <FloatingLabel controlId='password' className='mb-3' label={t('labels.password')}>
                                     <Form.Control
-                                        type="password"
-                                        id="password"
-                                        name="password"
+                                        type='password'
+                                        id='password'
+                                        name='password'
                                         placeholder={t('placeholders.password')}
-                                        autocomplete="new-password"
+                                        autocomplete='new-password'
                                         value={formik.values.password}
                                         onChange={formik.handleChange}
                                         isInvalid={
@@ -94,17 +94,17 @@ const SignUp = () => {
                                         }
                                         ref={inputUsername}
                                     />
-                                    <Form.Control.Feedback type="invalid" tooltip>
+                                    <Form.Control.Feedback type='invalid' tooltip>
                                         {formik.errors.password}
                                     </Form.Control.Feedback>
                                 </FloatingLabel>
-                                <FloatingLabel controlId="confirmPassword" className="mb-4" label={t('labels.confirmPassword')}>
+                                <FloatingLabel controlId='confirmPassword' className='mb-4' label={t('labels.confirmPassword')}>
                                     <Form.Control
-                                        type="password"
-                                        id="confirmPassword"
-                                        name="confirmPassword"
+                                        type='password'
+                                        id='confirmPassword'
+                                        name='confirmPassword'
                                         placeholder={t('placeholders.confirmPassword')}
-                                        autocomplete="new-password"
+                                        autocomplete='new-password'
                                         value={formik.values.confirmPassword}
                                         onChange={formik.handleChange}
                                         isInvalid={
@@ -112,11 +112,11 @@ const SignUp = () => {
                                             && formik.errors.confirmPassword
                                         }
                                     />
-                                    <Form.Control.Feedback type="invalid" tooltip>
+                                    <Form.Control.Feedback type='invalid' tooltip>
                                         {formik.errors.confirmPassword}
                                     </Form.Control.Feedback>
                                 </FloatingLabel>
-                                <Button className="w-100 mb-3" variant="outline-primary" type="submit">{t('actions.signUp')}</Button>
+                                <Button className='w-100 mb-3' variant='outline-primary' type='submit'>{t('actions.signUp')}</Button>
                             </Form>
                         </Card.Body>
                     </Card>

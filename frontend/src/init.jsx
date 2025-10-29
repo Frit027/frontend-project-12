@@ -15,62 +15,62 @@ import { actions as messagesActions } from './slices/messagesSlice';
 import { actions as channelsActions } from './slices/channelsSlice';
 
 export default async () => {
-  const rollbarConfig = {
-    enabled: true,
-    accessToken: process.env.REACT_APP_ROLLBAR_TOKEN,
-    captureUncaught: true,
-    captureUnhandledRejections: true,
-  };
+    const rollbarConfig = {
+        enabled: true,
+        accessToken: process.env.REACT_APP_ROLLBAR_TOKEN,
+        captureUncaught: true,
+        captureUnhandledRejections: true,
+    };
 
-  const i18nextInstance = i18n.createInstance();
-  await i18nextInstance
-    .use(initReactI18next)
-    .init({
-      lng: 'ru',
-      resources: {
-        ru,
-      },
+    const i18nextInstance = i18n.createInstance();
+    await i18nextInstance
+        .use(initReactI18next)
+        .init({
+            lng: 'ru',
+            resources: {
+                ru,
+            },
+        });
+
+    filter.add(filter.getDictionary('ru'));
+
+    const socket = io();
+
+    socket.on('newMessage', (msg) => {
+        store.dispatch(messagesActions.addMessage(msg));
     });
 
-  filter.add(filter.getDictionary('ru'));
+    socket.on('newChannel', (channel) => {
+        store.dispatch(channelsActions.addChannel(channel));
+    });
 
-  const socket = io();
+    socket.on('removeChannel', ({ id }) => {
+        store.dispatch(channelsActions.removeChannel(id));
+        if (store.getState().channels.currentChannelId === id) {
+            store.dispatch(channelsActions.setCurrentChannelId(1));
+        }
+    });
 
-  socket.on('newMessage', (msg) => {
-    store.dispatch(messagesActions.addMessage(msg));
-  });
+    socket.on('renameChannel', ({ id, name }) => {
+        store.dispatch(channelsActions.updateChannel({ id, changes: { name } }));
+    });
 
-  socket.on('newChannel', (channel) => {
-    store.dispatch(channelsActions.addChannel(channel));
-  });
-
-  socket.on('removeChannel', ({ id }) => {
-    store.dispatch(channelsActions.removeChannel(id));
-    if (store.getState().channels.currentChannelId === id) {
-      store.dispatch(channelsActions.setCurrentChannelId(1));
-    }
-  });
-
-  socket.on('renameChannel', ({ id, name }) => {
-    store.dispatch(channelsActions.updateChannel({ id, changes: { name } }));
-  });
-
-  const root = ReactDOM.createRoot(document.getElementById('chat'));
-  root.render(
-    <RollbarProvider config={rollbarConfig}>
-      <ErrorBoundary>
-        <React.StrictMode>
-          <Provider store={store}>
-            <SocketProvider socket={socket}>
-              <I18nextProvider i18n={i18nextInstance}>
-                <AuthProvider>
-                  <App />
-                </AuthProvider>
-              </I18nextProvider>
-            </SocketProvider>
-          </Provider>
-        </React.StrictMode>
-      </ErrorBoundary>
-    </RollbarProvider>,
-  );
+    const root = ReactDOM.createRoot(document.getElementById('chat'));
+    root.render(
+        <RollbarProvider config={rollbarConfig}>
+            <ErrorBoundary>
+                <React.StrictMode>
+                    <Provider store={store}>
+                        <SocketProvider socket={socket}>
+                            <I18nextProvider i18n={i18nextInstance}>
+                                <AuthProvider>
+                                    <App />
+                                </AuthProvider>
+                            </I18nextProvider>
+                        </SocketProvider>
+                    </Provider>
+                </React.StrictMode>
+            </ErrorBoundary>
+        </RollbarProvider>,
+    );
 };

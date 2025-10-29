@@ -8,29 +8,29 @@ import ChannelNameForm from '../forms/ChannelNameForm';
 import { actions } from '../../slices/modalsSlice';
 
 const RenameChannel = () => {
-  const dispatch = useDispatch();
-  const { t } = useTranslation();
-  const { renameChannel } = useContext(SocketContext);
-  const channel = useSelector((state) => state.modals.channel);
+    const dispatch = useDispatch();
+    const { t } = useTranslation();
+    const { renameChannel } = useContext(SocketContext);
+    const channel = useSelector((state) => state.modals.channel);
 
-  const handleSubmit = (name) => {
-    renameChannel(channel.id, name);
-    toast.success(t('titles.channelRenamed'));
-  };
+    const handleSubmit = (name) => {
+        renameChannel(channel.id, name);
+        toast.success(t('titles.channelRenamed'));
+    };
 
-  return (
-    <Modal show centered onHide={() => dispatch(actions.hideModal())}>
-      <Modal.Header closeButton>
-        <Modal.Title>{t('titles.renameChannel')}</Modal.Title>
-      </Modal.Header>
-      <Modal.Body>
-        <ChannelNameForm
-          currentName={channel.name}
-          handleSubmit={handleSubmit}
-        />
-      </Modal.Body>
-    </Modal>
-  );
+    return (
+        <Modal show centered onHide={() => dispatch(actions.hideModal())}>
+            <Modal.Header closeButton>
+                <Modal.Title>{t('titles.renameChannel')}</Modal.Title>
+            </Modal.Header>
+            <Modal.Body>
+                <ChannelNameForm
+                    currentName={channel.name}
+                    handleSubmit={handleSubmit}
+                />
+            </Modal.Body>
+        </Modal>
+    );
 };
 
 export default RenameChannel;

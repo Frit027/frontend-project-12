@@ -8,24 +8,24 @@ import Header from './elements/Header';
 import PrivateRoute from './pages/PrivateRoute';
 
 const App = () => (
-  <div className="d-flex flex-column h-100">
-    <BrowserRouter>
-      <Header />
-      <Routes>
-        <Route
-          path="/"
-          element={(
-            <PrivateRoute>
-              <Chat />
-            </PrivateRoute>
-          )}
-        />
-        <Route path="login" element={<Login />} />
-        <Route path="signup" element={<SignUp />} />
-        <Route path="*" element={<NotFound />} />
-      </Routes>
-    </BrowserRouter>
-  </div>
+    <div className="d-flex flex-column h-100">
+        <BrowserRouter>
+            <Header />
+            <Routes>
+                <Route
+                    path="/"
+                    element={(
+                        <PrivateRoute>
+                            <Chat />
+                        </PrivateRoute>
+                    )}
+                />
+                <Route path="login" element={<Login />} />
+                <Route path="signup" element={<SignUp />} />
+                <Route path="*" element={<NotFound />} />
+            </Routes>
+        </BrowserRouter>
+    </div>
 );
 
 export default App;

@@ -20,6 +20,7 @@
     "ignorePatterns": ["build"],
     "rules": {
         "indent": ["error", 4],
+        "jsx-quotes": ["error", "prefer-single"],
         "react/jsx-indent": ["error", 4],
         "react/jsx-indent-props": ["error", 4],
         "react/function-component-definition": [

@@ -18,11 +18,11 @@ Created channels can be renamed and deleted.
 ## Demonstration
 Below are some demonstration examples of how the site works.
 ### Login page
-![Login page](screenshots/login.png "Login page")
+![Login page](assets/login.png "Login page")
 ### Chat page
-![Chat page](screenshots/chat.png "Chat page")
+![Chat page](assets/chat.png "Chat page")
 ### New channel modal
-![New channel modal](screenshots/new-channel.png "New channel modal")
+![New channel modal](assets/new-channel.png "New channel modal")
 
 ## Installation and Usage
 Clone the repository.  

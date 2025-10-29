@@ -18,11 +18,11 @@
 ## Примеры работы веб-приложения
 Ниже представлены некоторые примеры работы веб-чата.
 ### Страница входа
-![Login page](screenshots/login.png "Login page")
+![Login page](assets/login.png "Login page")
 ### Общий чат
-![Chat page](screenshots/chat.png "Chat page")
+![Chat page](assets/chat.png "Chat page")
 ### Создание нового канала для общения
-![New channel modal](screenshots/new-channel.png "New channel modal")
+![New channel modal](assets/new-channel.png "New channel modal")
 
 ## Установка и использование
 Клонируйте данный репозиторий.  

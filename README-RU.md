@@ -1,5 +1,8 @@
-[![Static Badge](https://img.shields.io/badge/node-%3E%3D16.17.1-brightgreen)](https://nodejs.org/en)
+[![Static Badge](https://img.shields.io/badge/node-%3E%3D22.11.0-brightgreen)](https://nodejs.org/en)
+[![Static Badge](https://img.shields.io/badge/npm-%3E%3D10.9.0-blue)](https://docs.npmjs.com/downloading-and-installing-node-js-and-npm)
 [![Actions Status](https://github.com/Frit027/frontend-project-12/workflows/hexlet-check/badge.svg)](https://github.com/Frit027/frontend-project-12/actions)
+![Static Badge](https://img.shields.io/badge/React-61DAFB?style=flat&logo=react&logoColor=black)
+![Static Badge](https://img.shields.io/badge/JavaScript-F7DF1E?style=flat&logo=javascript&logoColor=black)
 
 <h1>
     <div align="right">
